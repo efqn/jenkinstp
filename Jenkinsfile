@@ -13,16 +13,11 @@ pipeline {
 				sh 'npm install'
 			}
 		}
-		stage('Test') {
-			steps {
-				sh 'npm test'
-			}
-		}
-		stage('deliver') {
-			steps {
-				input message: 'Finished using the web site ?'
-			}
-		}
+		// stage('Test') {
+		// 	steps {
+		// 		sh 'npm test'
+		// 	}
+		// }
 		stage('ansible playbook') {
 			steps{
 				ansiblePlaybook (
