@@ -19,7 +19,7 @@ pipeline {
 
 		stage('Test') {
 			steps {
-				sh "./src/_tests/App.test.js"
+				sh "./src/__tests__/App.test.js"
 			}
 		}
 	}
