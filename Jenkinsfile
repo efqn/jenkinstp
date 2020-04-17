@@ -2,25 +2,36 @@ pipeline {
 	agent {
 		docker {
 			image 'node:6-alpine'
-			args '-p 3000:3000'
 		}
 	}
-
 	environment {
-		CI = 'true'
+	CI = 'true'
 	}
-
 	stages {
 		stage('Build') {
 			steps {
 				sh 'npm install'
 			}
 		}
-
 		stage('Test') {
 			steps {
-				sh "./src/__tests__/App.test.js"
+				sh 'npm test'
 			}
 		}
+		stage('deliver') {
+			steps {
+				input message: 'Finished using the web site ?'
+			}
+		}
+		stage('ansible playbook') {
+			steps{
+				ansiblePlaybook (
+					colorized: true,
+					become: true,
+					playbook: 'playbook.yml'
+				)
+			}
+		}
+
 	}
 }

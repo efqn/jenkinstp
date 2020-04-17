@@ -1,0 +1,34 @@
+- name: "tp jenkins"
+  hosts: web
+  remote_user: root
+
+  tasks:
+    - name: "git install"
+      apt:
+        name: "git"
+        state: "present"
+
+    - name: "tp directory creation"
+      file:
+        path: /home/tpjenkins
+        state: directory
+
+    - name: "download git"
+      git:
+        repo: https://github.com/web-slate/simple-react-app-with-unit-testing
+        dest: /home/git
+
+    - name: "nodejs install"
+      apt:
+        name: nodejs
+        state: present
+
+
+    - name: "npm install"
+      apt:
+        name: npm
+        state: present
+
+    - name: "update npm"
+      shell:
+        cmd: npm update
