@@ -20,11 +20,17 @@ pipeline {
 		// }
 		stage('ansible playbook') {
 			steps{
-				ansiblePlaybook (
-					colorized: true,
-					become: true,
-					playbook: 'playbook.yml'
-				)
+				 def remote = [:]
+				    remote.name = 'ansible'
+				    remote.host = '192.168.56.103'
+				    remote.user = 'root'
+				    remote.password = 'azerty'
+				    remote.allowAnyHosts = true
+				    stage('Remote SSH') {
+				      sshCommand remote: remote, command: "cd /home/ansible/Bureau/tpjenkins2"
+				      sshCommand remote: remote, command: "playbook-ansible inventaire.ini playbook.yml"
+				    }
+                }
 			}
 		}
 
